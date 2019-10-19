@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Table from './Table';
+import Form from './Form';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+      state = { 
+        destList: []
+      }
+
+      removeDestination = index => {    
+        const listofDest = this.state.destList;     
+        this.setState({
+          destList: listofDest.filter((dest, i) => { 
+            return i !== index
+          }),     
+        })
+      }
+
+      handleSubmit = dest => {
+        this.setState({destList: [...this.state.destList, dest]});
+    }
+
+
+      render() {
+      
+      return (
+      <div className="App">
+        <h1>Travel Bucketlist</h1>
+        <Table destinations={this.state.destList} removeDestination={this.removeDestination}/>
+        <Form handleSubmit={this.handleSubmit} />
+      </div>
+      )
+    }
 }
+
 
 export default App;
